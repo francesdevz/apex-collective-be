@@ -1,5 +1,11 @@
 package ApexCollectiveHibernateBE.ApexCollective.Common;
 
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiResponse {
 
     private boolean success;
@@ -14,17 +20,5 @@ public class ApiResponse {
         this.timestamp = System.currentTimeMillis();
     }
 
-    // Getters and Setters
-    public boolean isSuccess() { return success; }
-    public void setSuccess(boolean success) { this.success = success; }
-
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-
-    public Object getData() { return data; }
-    public void setData(Object data) { this.data = data; }
-
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
 }
