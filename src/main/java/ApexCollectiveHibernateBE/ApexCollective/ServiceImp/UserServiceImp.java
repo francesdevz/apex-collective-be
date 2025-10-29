@@ -24,6 +24,7 @@ public class UserServiceImp implements UserService {
     @Override
     public ResponseEntity<ApiResponse> registerUser(UserModel userModel) {
         try {
+
             userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
             User t = new User();

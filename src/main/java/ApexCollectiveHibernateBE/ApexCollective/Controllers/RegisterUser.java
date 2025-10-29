@@ -15,7 +15,7 @@ public class RegisterUser {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", produces = "application/json")
     public ResponseEntity<ApiResponse> registerUser(@RequestBody UserModel userModel) {
        return userService.registerUser(userModel);
     }
