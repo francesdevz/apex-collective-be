@@ -1,6 +1,7 @@
 package ApexCollectiveHibernateBE.ApexCollective.Controllers;
 
 
+import ApexCollectiveHibernateBE.ApexCollective.Common.ApexCollectiveException;
 import ApexCollectiveHibernateBE.ApexCollective.Common.ApiResponse;
 import ApexCollectiveHibernateBE.ApexCollective.Model.UserModel;
 import ApexCollectiveHibernateBE.ApexCollective.Services.UserService;
@@ -16,7 +17,7 @@ public class RegisterUser {
     private UserService userService;
 
     @PostMapping(value = "/register", produces = "application/json")
-    public ResponseEntity<ApiResponse> registerUser(@RequestBody UserModel userModel) {
+    public ResponseEntity<ApiResponse> registerUser(@RequestBody UserModel userModel) throws ApexCollectiveException {
        return userService.registerUser(userModel);
     }
 

@@ -1,6 +1,7 @@
 package ApexCollectiveHibernateBE.ApexCollective.ServiceImp;
 
 
+import ApexCollectiveHibernateBE.ApexCollective.Common.ApexCollectiveException;
 import ApexCollectiveHibernateBE.ApexCollective.Common.ApiResponse;
 import ApexCollectiveHibernateBE.ApexCollective.Entity.User;
 import ApexCollectiveHibernateBE.ApexCollective.Model.UserModel;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImp implements UserService {
 
@@ -22,8 +25,14 @@ public class UserServiceImp implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<ApiResponse> registerUser(UserModel userModel) {
+    public ResponseEntity<ApiResponse> registerUser(UserModel userModel) throws ApexCollectiveException {
         try {
+
+            Optional<User> isUserAlreadyExist = userRegisterRepository.findByEmail(userModel.getEmail());
+
+            if(!isUserAlreadyExist.isEmpty()) {
+                throw new ApexCollectiveException("Email is already existed");
+            }
 
             userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
@@ -31,13 +40,12 @@ public class UserServiceImp implements UserService {
             t.setFullName(userModel.getFullName());
             t.setEmail(userModel.getEmail());
             t.setPassword(userModel.getPassword());
-
             userRegisterRepository.save(t);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(true, "User registered successfully", null));
 
         } catch (Exception e) {
-            throw e;
+            throw new ApexCollectiveException("Registration Failed", e);
         }
     }
 }
