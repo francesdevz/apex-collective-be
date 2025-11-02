@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ApexCollectiveHibernateBE.ApexCollective.Common.ExceptionMessage;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -41,7 +42,7 @@ public class UserServiceImp implements UserService {
                 throw new ApexCollectiveException(ExceptionMessage.EMAIL_ALREADY_EXISTED);
             }
 
-            if(!userModel.getDirectLogin()) {
+            if(Objects.isNull(userModel.getIsDirectLogin()) || !userModel.getIsDirectLogin()) {
                 log.debug("Encoding password for new user");
                 userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
             }
@@ -50,7 +51,7 @@ public class UserServiceImp implements UserService {
             User user = new User();
             user.setFullName(userModel.getFullName());
             user.setEmail(userModel.getEmail());
-            user.setPassword(userModel.getPassword());
+                user.setPassword(userModel.getPassword());
 
             log.info("Saving new user to database: {}", userModel.getEmail());
             User savedUser = userRegisterRepository.save(user);
@@ -67,7 +68,7 @@ public class UserServiceImp implements UserService {
         } catch (Exception e) {
             log.error("Registration failed with unexpected error for email {}: {}",
                     userModel.getEmail(), e.getMessage(), e);
-            throw new ApexCollectiveException(ExceptionMessage.REGISTERED_FAILED, e);
+            throw e;
         }
     }
 }

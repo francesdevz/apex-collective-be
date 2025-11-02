@@ -10,4 +10,5 @@ import lombok.*;
 public class LoginModel {
     private String email;
     private String password;
+    private Boolean isDirectLogin;
 }

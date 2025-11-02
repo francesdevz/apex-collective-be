@@ -20,7 +20,9 @@ import java.util.stream.Collectors;
 @Component
 public class JwtUtility {
 
+
     private static final Logger logger = (Logger) LoggerFactory.getLogger(JwtUtility.class);
+
     @Value("${app.jwt.secret}")
     private String jwtSecret;
 

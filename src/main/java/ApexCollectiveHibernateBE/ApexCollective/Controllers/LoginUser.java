@@ -25,11 +25,7 @@ public class LoginUser {
 
     @PostMapping("/user")
     public TokenModel getUser(@RequestBody LoginModel loginModel) throws ApexCollectiveException {
-        try {
-            return loginService.loginUser(loginModel);
-        } catch (Exception e) {
-            throw new ApexCollectiveException("Login Failed");
-        }
+        return loginService.loginUser(loginModel);
     }
 
     @GetMapping("/verify")

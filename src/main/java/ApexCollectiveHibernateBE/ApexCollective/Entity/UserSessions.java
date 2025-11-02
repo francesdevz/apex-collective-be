@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user_sessions")
+@Table(name = "user_session")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,10 +20,10 @@ public class UserSessions implements Serializable {
     @Column(name = "user_id")
     private Long user_id;
 
-    @Column(name = "access_token")
+    @Column(name = "access_token", columnDefinition = "TEXT")
     private String access_token;
 
-    @Column(name = "refresh_token")
+    @Column(name = "refresh_token", columnDefinition = "TEXT")
     private String refresh_token;
 
     @Column(name = "accessTokenExpiredAt")
